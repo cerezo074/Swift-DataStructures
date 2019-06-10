@@ -12,6 +12,8 @@ public struct LinkedList<Value> {
     }
     
     public mutating func push(_ value: Value) {
+        copyNodes()
+        
         head = Node(value: value, next: head)
         
         if tail == nil {
@@ -20,6 +22,8 @@ public struct LinkedList<Value> {
     }
     
     public mutating func append(_ value: Value) {
+        copyNodes()
+        
         let newTail = Node(value: value)
         
         if isEmpty {
@@ -48,6 +52,8 @@ public struct LinkedList<Value> {
     
     @discardableResult
     public mutating func insert(_ value: Value, at index: Int) -> Node<Value>? {
+        copyNodes()
+        
         if index == 0 {
             push(value)
             return head
@@ -67,6 +73,8 @@ public struct LinkedList<Value> {
     
     @discardableResult
     public mutating func insert(value: Value, after node: Node<Value>) -> Node<Value>? {
+        copyNodes()
+
         guard tail !== node else {
             append(value)
             return tail
@@ -80,6 +88,8 @@ public struct LinkedList<Value> {
     
     @discardableResult
     public mutating func pop() -> Node<Value>? {
+        copyNodes()
+
         guard let newHead = head?.next else {
             return nil
         }
@@ -92,6 +102,8 @@ public struct LinkedList<Value> {
     
     @discardableResult
     public mutating func removeLast() -> Node<Value>? {
+        copyNodes()
+
         guard let tail = tail else {
             return nil
         }
@@ -119,6 +131,8 @@ public struct LinkedList<Value> {
     }
     
     public mutating func remove(after node: Node<Value>) -> Node<Value>? {
+        copyNodes()
+
         guard node !== tail else {
             return nil
         }
@@ -132,6 +146,32 @@ public struct LinkedList<Value> {
         }
         
         return nodeToDelete
+    }
+    
+}
+
+private extension LinkedList {
+    
+    mutating func copyNodes() {
+        guard !isKnownUniquelyReferenced(&head) else {
+            return
+        }
+        
+        guard var oldNode = head else {
+            return
+        }
+        
+        head = Node(value: oldNode.value)
+        var newNode: Node<Value>? = head
+        
+        while let nextOldNode = oldNode.next {
+            newNode?.next = Node(value: nextOldNode.value)
+            newNode = newNode?.next
+            
+            oldNode = nextOldNode
+        }
+        
+        tail = newNode
     }
     
 }
