@@ -78,6 +78,62 @@ public struct LinkedList<Value> {
         return newNode
     }
     
+    @discardableResult
+    public mutating func pop() -> Node<Value>? {
+        guard let newHead = head?.next else {
+            return nil
+        }
+        
+        let oldHead = head
+        head = newHead
+        
+        return oldHead
+    }
+    
+    @discardableResult
+    public mutating func removeLast() -> Node<Value>? {
+        guard let tail = tail else {
+            return nil
+        }
+        
+        guard let head = head else {
+            return nil
+        }
+        
+        var current: Node<Value>? = head
+        var previous: Node<Value>? = head
+        
+        while current !== tail {
+            guard let next = current?.next else {
+                return nil
+            }
+            
+            previous = current
+            current = next
+        }
+        
+        previous?.next = nil
+        self.tail = previous
+        
+        return current
+    }
+    
+    public mutating func remove(after node: Node<Value>) -> Node<Value>? {
+        guard node !== tail else {
+            return nil
+        }
+        
+        let nodeToDelete = node.next
+        if nodeToDelete === tail {
+            node.next = nil
+            tail = node
+        } else {
+            node.next = nodeToDelete?.next
+        }
+        
+        return nodeToDelete
+    }
+    
 }
 
 extension LinkedList: CustomStringConvertible {
@@ -88,6 +144,55 @@ extension LinkedList: CustomStringConvertible {
         }
         
         return String(describing: head)
+    }
+    
+}
+
+extension LinkedList: Collection {
+    
+    public func index(after i: LinkedList<Value>.Index) -> LinkedList<Value>.Index {
+        return Index(node: i.node?.next)
+    }
+    
+    public var startIndex: LinkedList<Value>.Index {
+        return Index(node: head)
+    }
+    
+    public var endIndex: LinkedList<Value>.Index {
+        return Index(node: tail?.next)
+    }
+    
+    public subscript(position: LinkedList<Value>.Index) -> Value {
+        return position.node!.value
+    }
+    
+    public struct Index: Comparable {
+        
+        public var node: Node<Value>?
+        
+        public static func ==(left: Index, right: Index) -> Bool {
+            switch (left.node, right.node) {
+            case let (left?, right?):
+                return left.next === right.next
+            case (nil, nil):
+                return true
+            default:
+                return false
+            }
+        }
+        
+        public static func <(left: Index, right: Index) -> Bool {
+            guard left != right else {
+                return false
+            }
+            
+            let nodes = sequence(first: left.node) { $0?.next }
+            
+            return nodes.contains(where: { (node) -> Bool in
+                node === right.node
+            })
+        }
+        
     }
     
 }
