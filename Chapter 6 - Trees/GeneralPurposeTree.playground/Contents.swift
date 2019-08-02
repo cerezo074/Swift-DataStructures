@@ -55,3 +55,17 @@ example(of: "level-order traversal") {
     let tree = makeBeverageTree()
     tree.forEachLevelOrder(visit: { print($0.value) })
 }
+
+example(of: "searching for a node") {
+    let tree = makeBeverageTree()
+    
+    if let searchResult1 = tree.search("ginger ale") {
+        print("Found node: \(searchResult1.value)")
+    }
+    
+    if let searchResult2 = tree.search("WKD Blue") {
+        print("Found node: \(searchResult2.value)")
+    } else {
+        print("Couldn't find WKD Blue")
+    }
+}
