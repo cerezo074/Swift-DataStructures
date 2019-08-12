@@ -46,3 +46,30 @@ public extension TreeNode {
     }
 
 }
+
+public extension TreeNode {
+    
+    func printChallenge() {
+        var output: String = ""
+        var level: Int = 0
+        var queue = Queue<TreeNode>()
+        queue.enqueue(self)
+
+        while !queue.isEmpty {
+            var nodeLeftCurrentLevel: Int = queue.count
+            output.append("Level \(level): ")
+            while nodeLeftCurrentLevel > 0 {
+                guard let node = queue.dequeue() else { break }
+                output.append(contentsOf: "\(node.value) ")
+                node.children.forEach { queue.enqueue($0) }
+                nodeLeftCurrentLevel -= 1
+            }
+
+            level += 1
+            output.append("\n")
+        }
+
+        print(output)
+    }
+    
+}
