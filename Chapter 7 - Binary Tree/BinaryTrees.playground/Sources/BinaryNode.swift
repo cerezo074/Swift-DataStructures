@@ -53,3 +53,27 @@ extension BinaryNode {
     }
     
 }
+
+extension BinaryNode {
+    
+    public var height: Int {
+        return height(currenValue: -1)
+    }
+    
+    func height(currenValue: Int) -> Int {
+        let newCurrentValue = currenValue + 1
+        let leftMaxValue = leftChild?.height(currenValue: newCurrentValue) ?? currenValue
+        let rightMaxValue = rightChild?.height(currenValue: newCurrentValue) ?? currenValue
+        
+        if rightMaxValue > newCurrentValue, rightMaxValue > leftMaxValue {
+            return rightMaxValue
+        }
+        
+        if leftMaxValue > newCurrentValue, leftMaxValue > rightMaxValue {
+            return leftMaxValue
+        }
+        
+        return newCurrentValue
+    }
+    
+}
