@@ -21,3 +21,15 @@ var tree: BinaryNode<Int> {
 example(of: "tree diagram") {
     print(tree)
 }
+
+//example(of: "Traverse in order") {
+//    tree.traverseInOrder(visit: { print($0) })
+//}
+//
+//example(of: "Traverse pre order") {
+//    tree.traversePreOrder(visit: { print($0) })
+//}
+
+example(of: "Traverse post order") {
+    tree.traversePostOrder(visit: { print($0) })
+}
