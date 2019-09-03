@@ -29,6 +29,27 @@ extension BinaryNode: CustomStringConvertible {
             + root + "\(node.value)\n"
             + diagram(for: node.leftChild, top: bottom +  "│ ", root: bottom + "└──", bottom: bottom + " ")
     }
+
+    public static func diagram2(for node: BinaryNode?, height: Int = 0) {
+        guard let value = node?.value else {
+            print("\n\(space(for: height))nil")
+            return
+        }
+
+        if node?.leftChild == nil, node?.rightChild == nil {
+            print("\n\(space(for: height))\(value)")
+            return
+        }
+
+        let newHeight = height + 1
+        diagram2(for: node?.rightChild, height: newHeight)
+        print("\n\(space(for: height))\(value)")
+        diagram2(for: node?.leftChild, height: newHeight)
+    }
+
+    private static func space(for level: Int) -> String {
+        return (0..<level).map { _ in "    " }.joined()
+    }
     
 }
 

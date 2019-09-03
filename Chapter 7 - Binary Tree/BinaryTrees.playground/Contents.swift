@@ -40,7 +40,7 @@ var tree2: BinaryNode<Int> {
 }
 
 example(of: "tree diagram") {
-    print(tree2)
+    print(tree)
 }
 
 //example(of: "Traverse in order") {
@@ -59,13 +59,17 @@ example(of: "tree diagram") {
 //    print("Three height: \(tree.height)")
 //}
 
-example(of: "Serialization & Deserialization") {
-    var serializedTree = BinaryNode.serialize(rootNode: tree2)
-    print("\n\nSerialization")
-    print(serializedTree)
+//example(of: "Serialization & Deserialization") {
+//    var serializedTree = BinaryNode.serialize(rootNode: tree2)
+//    print("\n\nSerialization")
+//    print(serializedTree)
+//
+//    if let treeDeserialized = BinaryNode.deserialize(values: &serializedTree) {
+//        print("\n\nDeserialization")
+//        print(treeDeserialized)
+//    }
+//}
 
-    if let treeDeserialized = BinaryNode.deserialize(values: &serializedTree) {
-        print("\n\nDeserialization")
-        print(treeDeserialized)
-    }
+example(of: "Second diagram") {
+    BinaryNode.diagram2(for: tree)
 }
