@@ -22,8 +22,25 @@ var tree: BinaryNode<Int> {
     return seven
 }
 
+var tree2: BinaryNode<Int> {
+    let fifthTeen = BinaryNode(value: 15)
+    let ten = BinaryNode(value: 10)
+    let five = BinaryNode(value: 5)
+    let sevenTeen = BinaryNode(value: 17)
+    let twentyFive = BinaryNode(value: 25)
+    let twelve = BinaryNode(value: 12)
+
+    fifthTeen.leftChild = ten
+    fifthTeen.rightChild = twentyFive
+    ten.leftChild = five
+    ten.rightChild = twelve
+    twentyFive.leftChild = sevenTeen
+
+    return fifthTeen
+}
+
 example(of: "tree diagram") {
-    print(tree)
+    print(tree2)
 }
 
 //example(of: "Traverse in order") {
@@ -38,6 +55,17 @@ example(of: "tree diagram") {
 //    tree.traversePostOrder(visit: { print($0) })
 //}
 
-example(of: "Result of challenge 1, Tree Height") {
-    print("Three height: \(tree.height)")
+//example(of: "Result of challenge 1, Tree Height") {
+//    print("Three height: \(tree.height)")
+//}
+
+example(of: "Serialization & Deserialization") {
+    var serializedTree = BinaryNode.serialize(rootNode: tree2)
+    print("\n\nSerialization")
+    print(serializedTree)
+
+    if let treeDeserialized = BinaryNode.deserialize(values: &serializedTree) {
+        print("\n\nDeserialization")
+        print(treeDeserialized)
+    }
 }

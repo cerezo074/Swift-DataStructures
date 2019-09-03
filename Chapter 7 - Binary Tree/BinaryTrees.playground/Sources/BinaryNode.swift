@@ -75,5 +75,25 @@ extension BinaryNode {
         
         return newCurrentValue
     }
-    
+
+    public static func serialize(rootNode: BinaryNode?) -> [Element?] {
+        guard let rootNode = rootNode else { return [nil] }
+        let leftSerialization = serialize(rootNode: rootNode.leftChild)
+        let rightSerialization = serialize(rootNode: rootNode.rightChild)
+
+        return [rootNode.value] + leftSerialization + rightSerialization
+    }
+
+    public static func deserialize(values: inout [Element?]) -> BinaryNode? {
+        guard let value = values.removeFirst() else { return nil }
+
+        let node = BinaryNode<Element>(value: value)
+        let leftDeserialization = deserialize(values: &values)
+        node.leftChild = leftDeserialization
+        let rightDeserialization = deserialize(values: &values)
+        node.rightChild = rightDeserialization
+
+        return node
+    }
+
 }
