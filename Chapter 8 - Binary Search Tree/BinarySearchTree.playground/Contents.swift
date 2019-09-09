@@ -24,3 +24,12 @@ example(of: "finding a node") {
         print("Couldn't find \(target)")
     }
 }
+
+example(of: "Removing a node") {
+    var tree = exampleTree
+    print("Tree before removal")
+    print(tree)
+    tree.remove(value: 4)
+    print("Tree after removing root:")
+    print(tree)
+}
