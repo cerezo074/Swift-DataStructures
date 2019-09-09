@@ -88,10 +88,6 @@ private extension BinaryNode {
         return leftChild?.min ?? self
     }
     
-    var isLeaf: Bool {
-        return leftChild == nil && rightChild == nil
-    }
-    
 }
 
 extension BinarySearchTree {
@@ -125,6 +121,44 @@ extension BinarySearchTree {
         }
         
         return node
+    }
+    
+}
+
+//Challenge
+extension BinaryNode {
+    
+    public var isBST: Bool {
+        return passBSTRules(on: self) == nil
+    }
+    
+    private func passBSTRules(on node: BinaryNode<Element>?) -> BinaryNode<Element>? {
+        guard let node = node else { return nil }
+        
+        if node.isLeaf {
+            return nil
+        }
+        
+        if let rightChild = node.rightChild, rightChild.value < node.value {
+            print("\(node.value) ----- \(rightChild.value)")
+            print("Tree is not BST, this node \(rightChild.value), doesnt fit right condition")
+            return node
+        }
+        
+        if let leftChild = node.leftChild, leftChild.value >= node.value {
+            print("Tree is not BST, this node \(leftChild.value), doesnt fit left condition")
+            return node
+        }
+        
+        if let leftSubTreeResult = passBSTRules(on: node.leftChild) {
+            return leftSubTreeResult
+        }
+        
+        if let rightSubTreeResult = passBSTRules(on: node.rightChild) {
+            return rightSubTreeResult
+        }
+            
+        return nil
     }
     
 }
