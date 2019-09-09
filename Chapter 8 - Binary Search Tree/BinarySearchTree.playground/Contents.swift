@@ -17,9 +17,10 @@ example(of: "Building a BST") {
 }
 
 example(of: "finding a node") {
-    if exampleTree.contains2(value: 7) {
-        print("Found 5!")
+    let target: Int = 7
+    if exampleTree.contains2(value: target) {
+        print("Found \(target)!")
     } else {
-        print("Couldn't find 5")
+        print("Couldn't find \(target)")
     }
 }

@@ -73,8 +73,7 @@ extension BinarySearchTree {
                 return true
             }
 
-            nextNode = currentNode.value < value ? currentNode.leftChild : currentNode.rightChild
-            print("\(currentNode.value) < \(value) ? \(currentNode.leftChild?.value) : \(currentNode.rightChild?.value)")
+            nextNode = value < currentNode.value ? currentNode.leftChild : currentNode.rightChild
         }
 
         return false
