@@ -31,6 +31,23 @@ var BSTTree: BinaryNode<Int> {
     return treeNode
 }
 
+var invalidBSTTree: BinaryNode<Int> {
+    let rootNode = BinaryNode<Int>(value: 3)
+    let oneNode = BinaryNode<Int>(value: 1)
+    let sevenNode = BinaryNode<Int>(value: 7)
+    let zeroNode = BinaryNode<Int>(value: 0)
+    let twoNode = BinaryNode<Int>(value: 2)
+    let fiveNode = BinaryNode<Int>(value: 5)
+    
+    rootNode.leftChild = oneNode
+    rootNode.rightChild = sevenNode
+    oneNode.leftChild = zeroNode
+    oneNode.rightChild = twoNode
+    sevenNode.rightChild = fiveNode
+    
+    return rootNode
+}
+
 //example(of: "Building a BST") {
 //    print(exampleTree)
 //}
@@ -53,7 +70,7 @@ var BSTTree: BinaryNode<Int> {
 //    print(tree)
 //}
 
-class BSTChallengeTests: XCTestCase {
+class BSTFirstChallengeTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -106,10 +123,32 @@ class BSTChallengeTests: XCTestCase {
         XCTAssertEqual(exception.side, .right, "\(exception.node.value) node is not lesser than parent node")
     }
     
-    func testShouldNotGetExepctionWhenTreeIsBST() {
+    func testShouldNotGetExceptionWhenTreeIsBST() {
         XCTAssertNil(BSTTree.invalidElementForBST(), "Exeption can not be created from invalidElementForBST api, when tree pass BST conditions")
     }
     
 }
 
-BSTChallengeTests.defaultTestSuite.run()
+BSTFirstChallengeTests.defaultTestSuite.run()
+
+class BSTChallengeTest: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    func testWhenTreesAreEqualThenTestPass() {
+        XCTAssertEqual(BSTTree, BSTTree, "Trees should be equal, they are created in the same way")
+    }
+    
+    func testWhenTreesAreNotEqualThenTestFail() {
+        XCTAssertNotEqual(BSTTree, invalidBSTTree, "Trees should not be equal, they are created in different way")
+    }
+    
+}
+
+BSTChallengeTest.defaultTestSuite.run()

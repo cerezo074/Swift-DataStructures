@@ -125,7 +125,7 @@ extension BinarySearchTree {
     
 }
 
-//Challenge
+//Challenge 1
 extension BinaryNode {
     
     public enum ChildSide {

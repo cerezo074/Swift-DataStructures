@@ -10,36 +10,32 @@ public class BinaryNode<Element: Comparable> {
         self.value = value
     }
     
-    public static func <(leftValue: BinaryNode<Element>, rightValue: BinaryNode<Element>) -> Bool {
-        return leftValue.value < rightValue.value
-    }
+}
+
+extension BinaryNode: Equatable {
     
     public static func ==(leftNode: BinaryNode<Element>, rightNode: BinaryNode<Element>) -> Bool {
-        if leftNode.isLeaf && rightNode.isLeaf {
-            return leftNode.value == rightNode.value
-        }
-        
-        if leftNode.leftChild == nil, rightNode.leftChild == nil,
-            let leftNodeRightChild = leftNode.rightChild,
-            let rightNodeRightChild = rightNode.rightChild {
-            return leftNodeRightChild.value == rightNodeRightChild.value
-        }
-        
-        if leftNode.rightChild == nil, rightNode.rightChild == nil,
-            let leftNodeLeftChild = leftNode.leftChild,
-            let rightNodeLeftChild = rightNode.leftChild {
-            return leftNodeLeftChild.value == rightNodeLeftChild.value
-        }
-        
-        guard  let leftNodeRightChild = leftNode.rightChild,
-            let rightNodeRightChild = rightNode.rightChild,
-            let leftNodeLeftChild = leftNode.leftChild,
-            let rightNodeLeftChild = rightNode.leftChild else {
-                return false
-        }
-        
-        return leftNodeRightChild.value == rightNodeRightChild.value && leftNodeLeftChild.value == rightNodeLeftChild.value
+        return inOrderTraverse(leftNode: leftNode, rightNode: rightNode)
     }
+    
+    public static func inOrderTraverse(leftNode: BinaryNode<Element>?, rightNode: BinaryNode<Element>?) -> Bool {
+        if let leftNode = leftNode, let rightNode = rightNode,
+            leftNode.value == rightNode.value {
+            
+            let leftResult = inOrderTraverse(leftNode: leftNode.leftChild, rightNode: rightNode.leftChild)
+            guard leftResult else { return false }
+            
+            let rightResult = inOrderTraverse(leftNode: leftNode.rightChild, rightNode: rightNode.rightChild)
+            guard rightResult else { return false }
+            
+            return true
+        } else if leftNode == nil, rightNode == nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 }
 
 extension BinaryNode: CustomStringConvertible {
