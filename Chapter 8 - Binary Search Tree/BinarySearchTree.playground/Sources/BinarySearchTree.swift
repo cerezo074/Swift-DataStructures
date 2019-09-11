@@ -128,11 +128,22 @@ extension BinarySearchTree {
 //Challenge
 extension BinaryNode {
     
+    public enum ChildSide {
+        case left
+        case right
+    }
+    
+    public typealias ChildNode = (node: BinaryNode<Element>, side: ChildSide)
+    
     public var isBST: Bool {
         return passBSTRules(on: self) == nil
     }
     
-    private func passBSTRules(on node: BinaryNode<Element>?) -> BinaryNode<Element>? {
+    public func invalidElementForBST() -> ChildNode? {
+        return passBSTRules(on: self)
+    }
+    
+    private func passBSTRules(on node: BinaryNode<Element>?) -> ChildNode? {
         guard let node = node else { return nil }
         
         if node.isLeaf {
@@ -140,14 +151,11 @@ extension BinaryNode {
         }
         
         if let rightChild = node.rightChild, rightChild.value < node.value {
-            print("\(node.value) ----- \(rightChild.value)")
-            print("Tree is not BST, this node \(rightChild.value), doesnt fit right condition")
-            return node
+            return (rightChild, .right)
         }
         
         if let leftChild = node.leftChild, leftChild.value >= node.value {
-            print("Tree is not BST, this node \(leftChild.value), doesnt fit left condition")
-            return node
+            return (leftChild, .left)
         }
         
         if let leftSubTreeResult = passBSTRules(on: node.leftChild) {

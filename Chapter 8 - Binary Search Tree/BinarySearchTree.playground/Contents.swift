@@ -1,5 +1,7 @@
 // Copyright (c) 2018 Razeware LLC
 // For full license & permission details, see LICENSE.markdown.
+import XCTest
+import Foundation
 
 var exampleTree: BinarySearchTree<Int> {
     var bst = BinarySearchTree<Int>()
@@ -12,7 +14,7 @@ var exampleTree: BinarySearchTree<Int> {
     return bst
 }
 
-var exampleTree2: BinaryNode<Int> {
+var BSTTree: BinaryNode<Int> {
     let treeNode = BinaryNode<Int>(value: 3)
     let oneNode = BinaryNode<Int>(value: 1)
     let fourNode = BinaryNode<Int>(value: 4)
@@ -51,7 +53,63 @@ var exampleTree2: BinaryNode<Int> {
 //    print(tree)
 //}
 
-example(of: "Challenge, check if a Binary Tree is BST") {
-    print(exampleTree2)
-    print(exampleTree2.isBST)
+class BSTChallengeTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+    }
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    func testWhenLeftConditionFailsThenTestGetsException() {
+        let rootNode = BinaryNode<Int>(value: 3)
+        let oneNode = BinaryNode<Int>(value: 1)
+        let fourNode = BinaryNode<Int>(value: 4)
+        let zeroNode = BinaryNode<Int>(value: 0)
+        let twoNode = BinaryNode<Int>(value: 2)
+        let fiveNode = BinaryNode<Int>(value: 5)
+        
+        rootNode.leftChild = oneNode
+        rootNode.rightChild = fourNode
+        oneNode.leftChild = zeroNode
+        oneNode.rightChild = twoNode
+        fourNode.leftChild = fiveNode
+        
+        guard let exception = rootNode.invalidElementForBST() else {
+            assertionFailure("Exeption can not be empty")
+            return
+        }
+        
+        XCTAssertEqual(exception.side, .left, "\(exception.node.value) node is not greater than parent node")
+    }
+    
+    func testWhenRightConditionFailsThenTestGetsException() {
+        let rootNode = BinaryNode<Int>(value: 3)
+        let oneNode = BinaryNode<Int>(value: 1)
+        let sevenNode = BinaryNode<Int>(value: 7)
+        let zeroNode = BinaryNode<Int>(value: 0)
+        let twoNode = BinaryNode<Int>(value: 2)
+        let fiveNode = BinaryNode<Int>(value: 5)
+        
+        rootNode.leftChild = oneNode
+        rootNode.rightChild = sevenNode
+        oneNode.leftChild = zeroNode
+        oneNode.rightChild = twoNode
+        sevenNode.rightChild = fiveNode
+        
+        guard let exception = rootNode.invalidElementForBST() else {
+            assertionFailure("Exeption can not be empty")
+            return
+        }
+        
+        XCTAssertEqual(exception.side, .right, "\(exception.node.value) node is not lesser than parent node")
+    }
+    
+    func testShouldNotGetExepctionWhenTreeIsBST() {
+        XCTAssertNil(BSTTree.invalidElementForBST(), "Exeption can not be created from invalidElementForBST api, when tree pass BST conditions")
+    }
+    
 }
+
+BSTChallengeTests.defaultTestSuite.run()
