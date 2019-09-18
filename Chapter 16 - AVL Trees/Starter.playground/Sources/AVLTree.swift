@@ -86,7 +86,7 @@ extension AVLTree {
                 return rightRotate(node)
             }
         case -2:
-            if let rightChild = node.rightChild, rightChild.balanceFactor == -1 {
+            if let rightChild = node.rightChild, rightChild.balanceFactor == 1 {
                 return rightLeftRotate(node)
             } else {
                 return leftRotate(node)
