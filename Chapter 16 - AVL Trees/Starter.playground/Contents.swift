@@ -21,4 +21,5 @@ example(of: "removing a value") {
     tree.root?.traverseInOrder(visit: {
         print($0)
     })
+    "".hasPrefix(<#T##prefix: String##String#>)
 }
