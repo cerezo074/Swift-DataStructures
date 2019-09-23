@@ -15,7 +15,10 @@ example(of: "removing a value") {
     tree.insert(10)
     tree.insert(16)
     tree.insert(18)
-    print(tree)
+//    print(tree)
     tree.remove(10)
-    print(tree)
+//    print(tree)
+    tree.root?.traverseInOrder(visit: {
+        print($0)
+    })
 }

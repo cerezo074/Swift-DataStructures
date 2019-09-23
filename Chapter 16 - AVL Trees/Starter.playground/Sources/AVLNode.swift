@@ -71,3 +71,31 @@ extension AVLNode {
     }
     
 }
+
+protocol TraversableBinaryNode {
+    associatedtype Element
+    var value: Element { get }
+    var leftChild: Self? { get }
+    var rightChild: Self? { get }
+}
+
+extension TraversableBinaryNode {
+    public func traverseInOrder(visit: (Element) -> Void) {
+        leftChild?.traverseInOrder(visit: visit)
+        visit(value)
+        rightChild?.traverseInOrder(visit: visit)
+    }
+
+    public func traversePreOrder(visit: (Element) -> Void) {
+        visit(value)
+        leftChild?.traversePreOrder(visit: visit)
+        rightChild?.traversePreOrder(visit: visit)
+    }
+
+    public func traversePostOrder(visit: (Element) -> Void) {
+        leftChild?.traversePostOrder(visit: visit)
+        rightChild?.traversePostOrder(visit: visit)
+        visit(value)
+    }
+
+}
