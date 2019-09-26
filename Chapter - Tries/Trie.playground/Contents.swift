@@ -26,9 +26,31 @@
 //  print("\"cute\" is still in the trie")
 //}
 
-example(of: "Prefix matching") {
+//example(of: "Prefix matching") {
+//    let trie = Trie<String>()
+//    trie.insert("car")
+//    trie.insert("card")
+//    trie.insert("care")
+//    trie.insert("cared")
+//    trie.insert("cars")
+//    trie.insert("carbs")
+//    trie.insert("carapace")
+//    trie.insert("cargo")
+//
+//    print("\nCollections starting with \"car\"")
+//    let prefixedWithCar = trie.collections(startWith: "car")
+//    print(prefixedWithCar)
+//
+//    print("\nCollections starting with \"care\"")
+//    let prefixedWithCare = trie.collections(startWith: "care")
+//    print(prefixedWithCare)
+//}
+
+example(of: "Challenge") {
     let trie = Trie<String>()
+    print(trie.isEmpty)
     trie.insert("car")
+    print(trie.isEmpty)
     trie.insert("card")
     trie.insert("care")
     trie.insert("cared")
@@ -37,11 +59,9 @@ example(of: "Prefix matching") {
     trie.insert("carapace")
     trie.insert("cargo")
 
-    print("\nCollections starting with \"car\"")
-    let prefixedWithCar = trie.collections(startWith: "car")
-    print(prefixedWithCar)
-
-    print("\nCollections starting with \"care\"")
-    let prefixedWithCare = trie.collections(startWith: "care")
-    print(prefixedWithCare)
+    print(trie.collections)
+    print(trie.count)
+    trie.remove("car")
+    print(trie.collections)
+    print(trie.count)
 }

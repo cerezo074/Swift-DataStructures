@@ -1,14 +1,24 @@
 import Foundation
 
-public class Trie<CollectionType: Collection> where CollectionType.Element: Hashable {
+public class Trie<CollectionType: Collection & Hashable> where CollectionType.Element: Hashable {
 
     public typealias Node = TrieNode<CollectionType.Element>
     private let root = Node(key: nil, parent: nil)
     public init() {}
 
+    public private(set) var collections: Set<CollectionType> = []
+
 }
 
 public extension Trie {
+
+    var count: Int {
+        return collections.count
+    }
+
+    var isEmpty: Bool {
+        return collections.isEmpty
+    }
 
     func insert(_ collection: CollectionType) {
         var current = root
@@ -22,6 +32,7 @@ public extension Trie {
         }
 
         current.isTerminating = true
+        collections.insert(collection)
     }
 
     func contains(_ collection: CollectionType) -> Bool {
@@ -53,6 +64,7 @@ public extension Trie {
             return
         }
 
+        collections.remove(collection)
         current.isTerminating = false
 
         while let parent = current.parent,
