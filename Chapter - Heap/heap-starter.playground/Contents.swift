@@ -8,8 +8,15 @@ struct Heap<Element: Equatable> {
     var elements: [Element] = []
     let sort: SortBuilder
 
-    init(sort: @escaping SortBuilder) {
+    init(sort: @escaping SortBuilder, elements: [Element] = []) {
         self.sort = sort
+        self.elements = elements
+        
+        if !elements.isEmpty {
+            for i in stride(from: elements.count / 2 - 1, through: 0, by: -1) {
+                siftDown(from: i)
+            }
+        }
     }
 
     var isEmpty: Bool {
@@ -114,5 +121,36 @@ struct Heap<Element: Equatable> {
             }
         }
     }
+    
+    func index(of element:  Element, statingAt i: Int) -> Int? {
+        if i >= count {
+            return nil
+        }
+        
+        if sort(element, elements[i]) {
+            return nil
+        }
+        
+        if element == elements[i] {
+            return i
+        }
+        
+        if let j = index(of: element, statingAt: leftChildIndex(ofParentAt: i)) {
+            return j
+        }
+        
+        if let j = index(of: element, statingAt: rightChildIndex(ofParentAt: i)) {
+            return j
+        }
+        
+        return nil
+    }
 
+}
+
+
+var heap = Heap(sort: >, elements: [1, 12, 3, 4, 1, 6, 8, 7])
+
+while !heap.isEmpty {
+    print(heap.remove()!)
 }
