@@ -10,13 +10,28 @@ struct Heap<Element: Equatable> {
 
     init(sort: @escaping SortBuilder, elements: [Element] = []) {
         self.sort = sort
-        self.elements = elements
-        
+
         if !elements.isEmpty {
-            for i in stride(from: elements.count / 2 - 1, through: 0, by: -1) {
-                siftDown(from: i)
+            for i in elements {
+                insert(i)
             }
         }
+    }
+
+    mutating func getNthElement(_ order: Int) -> Element? {
+        guard order > 0 else { return nil }
+        var currentOrder = 1
+
+        while !elements.isEmpty {
+            if order == currentOrder {
+                break
+            }
+
+            remove()
+            currentOrder += 1
+        }
+
+        return peek()
     }
 
     var isEmpty: Bool {
@@ -86,12 +101,12 @@ struct Heap<Element: Equatable> {
             let right = rightChildIndex(ofParentAt: parent)
             var candidate = parent
 
-            if left < count, sort(elements[left], elements[candidate]) {
-                candidate = left
-            }
-
             if right < count, sort(elements[right], elements[candidate]) {
                 candidate = right
+            }
+
+            if left < count, sort(elements[left], elements[candidate]) {
+                candidate = left
             }
 
             if candidate == parent {
@@ -121,6 +136,35 @@ struct Heap<Element: Equatable> {
             }
         }
     }
+
+    mutating func merge(_ heap: Heap) {
+        guard let firtPeek = peek() else { return }
+        guard let secondPeek = peek() else { return }
+
+        var heapToDesapear: Heap
+        var heapToBeUpdated: Heap
+        var isSelfDeleted = false
+        if sort(firtPeek, secondPeek) {
+            heapToDesapear = heap
+            heapToBeUpdated = self
+        } else {
+            heapToDesapear = self
+            heapToBeUpdated = heap
+            isSelfDeleted = true
+        }
+
+        while !heapToDesapear.isEmpty {
+            guard let newElement = heapToDesapear.remove() else {
+                continue
+            }
+
+            heapToBeUpdated.insert(newElement)
+        }
+
+        if isSelfDeleted {
+            self = heapToBeUpdated
+        }
+    }
     
     func index(of element:  Element, statingAt i: Int) -> Int? {
         if i >= count {
@@ -148,9 +192,14 @@ struct Heap<Element: Equatable> {
 
 }
 
+//Challenge 1
+//var minHeap = Heap(sort: <, elements: [3, 10, 18, 5, 21, 100])
+//print(minHeap.getNthElement(3))
 
-var heap = Heap(sort: >, elements: [1, 12, 3, 4, 1, 6, 8, 7])
+//Challenge 3
+var minHeap2_1 = Heap(sort: <, elements: [3, 10, 18, 5, 21, 100])
+var minHeap2_2 = Heap(sort: <, elements: [30, 21, 39, 50, 11])
+minHeap2_2.merge(minHeap2_1)
+print(minHeap2_2.elements)
 
-while !heap.isEmpty {
-    print(heap.remove()!)
-}
+//Challenge 4
