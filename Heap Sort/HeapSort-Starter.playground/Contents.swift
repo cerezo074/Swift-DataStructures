@@ -138,5 +138,15 @@ extension Heap {
 
 }
 
-let heap = Heap(sort: >, elements: [6, 12, 2, 26, 8, 18, 21, 9, 5])
-print(heap.sorted())
+//Challenges 1 and 3
+
+extension Array where Element: Comparable {
+
+    func heapSort(sort: @escaping (Element, Element) -> Bool) -> Array<Element> {
+        let heap = Heap(sort: sort, elements: self)
+        return heap.sorted()
+    }
+
+}
+
+print([6, 12, 2, 26, 8, 18, 21, 9, 5].heapSort(sort: >))
