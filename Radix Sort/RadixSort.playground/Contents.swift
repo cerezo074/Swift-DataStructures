@@ -25,7 +25,6 @@ extension Array where Element == Int {
             
             digits *= base
             self = buckets.flatMap { $0 }
-            print(buckets)
         }
     }
     
