@@ -29,28 +29,56 @@
 //print(graph)
 
 //Using adjacency matrix
-let graph = AdjacencyMatrix<String>()
+//let graph = AdjacencyMatrix<String>()
+//
+//let singapore = graph.createVertex(data: "Singapore")
+//let tokyo = graph.createVertex(data: "Tokyo")
+//let hongKong = graph.createVertex(data: "Hong Kong")
+//let detroit = graph.createVertex(data: "Detroit")
+//let sanFrancisco = graph.createVertex(data: "San Francisco")
+//let washingtonDC = graph.createVertex(data: "Washington DC")
+//let austinTexas = graph.createVertex(data: "Austin Texas")
+//let seattle = graph.createVertex(data: "Seattle")
+//
+//graph.add(.undirected, from: singapore, to: hongKong, weight: nil)
+//graph.add(.undirected, from: singapore, to: tokyo, weight: 0)
+//graph.add(.undirected, from: hongKong, to: tokyo, weight: 0)
+//graph.add(.undirected, from: tokyo, to: detroit, weight: nil)
+//graph.add(.undirected, from: tokyo, to: washingtonDC, weight: nil)
+//graph.add(.undirected, from: hongKong, to: sanFrancisco, weight: 0)
+//graph.add(.undirected, from: detroit, to: austinTexas, weight: 0)
+//graph.add(.undirected, from: austinTexas, to: washingtonDC, weight: 0)
+//graph.add(.undirected, from: sanFrancisco, to: washingtonDC, weight: 0)
+//graph.add(.undirected, from: washingtonDC, to: seattle, weight: 0)
+//graph.add(.undirected, from: sanFrancisco, to: seattle, weight: 0)
+//graph.add(.undirected, from: austinTexas, to: sanFrancisco, weight: 0)
+//
+//print(graph)
 
-let singapore = graph.createVertex(data: "Singapore")
-let tokyo = graph.createVertex(data: "Tokyo")
-let hongKong = graph.createVertex(data: "Hong Kong")
-let detroit = graph.createVertex(data: "Detroit")
-let sanFrancisco = graph.createVertex(data: "San Francisco")
-let washingtonDC = graph.createVertex(data: "Washington DC")
-let austinTexas = graph.createVertex(data: "Austin Texas")
-let seattle = graph.createVertex(data: "Seattle")
+import XCTest
 
-graph.add(.undirected, from: singapore, to: hongKong, weight: nil)
-graph.add(.undirected, from: singapore, to: tokyo, weight: 0)
-graph.add(.undirected, from: hongKong, to: tokyo, weight: 0)
-graph.add(.undirected, from: tokyo, to: detroit, weight: nil)
-graph.add(.undirected, from: tokyo, to: washingtonDC, weight: nil)
-graph.add(.undirected, from: hongKong, to: sanFrancisco, weight: 0)
-graph.add(.undirected, from: detroit, to: austinTexas, weight: 0)
-graph.add(.undirected, from: austinTexas, to: washingtonDC, weight: 0)
-graph.add(.undirected, from: sanFrancisco, to: washingtonDC, weight: 0)
-graph.add(.undirected, from: washingtonDC, to: seattle, weight: 0)
-graph.add(.undirected, from: sanFrancisco, to: seattle, weight: 0)
-graph.add(.undirected, from: austinTexas, to: sanFrancisco, weight: 0)
+class GraphTests: XCTestCase {
+    
+    override class func tearDown() {
+        super.tearDown()
+    }
+    
+    override class func setUp() {
+        super.setUp()
+    }
+    
+    func testTotalEdgesBetween2NodesShouldCount5Edges() {
+        
+    }
+        
+    func testShouldCount0EdgesForTotalEdgesBetween2Nodes() {
+        
+    }
+    
+    func testTotalEdgesBetween2NodesShouldCount3Edges() {
+        
+    }
+    
+}
 
-print(graph)
+GraphTests.defaultTestSuite.run()

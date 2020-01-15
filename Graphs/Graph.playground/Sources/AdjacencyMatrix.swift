@@ -1,6 +1,6 @@
 import Foundation
 
-public class AdjacencyMatrix<T> {
+public class AdjacencyMatrix<T: Hashable> {
     
     private var vertices: [Vertex<T>] = []
     private var weights: [[Double?]] = []

@@ -5,3 +5,11 @@ public struct Edge<T> {
     public let destination: Vertex<T>
     public let wieght: Double?
 }
+
+extension Edge: Hashable where T: Hashable {
+    
+}
+
+extension Edge: Equatable where T: Equatable {
+    
+}
