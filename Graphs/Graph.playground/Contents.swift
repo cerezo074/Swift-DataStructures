@@ -59,6 +59,51 @@ import XCTest
 
 class GraphTests: XCTestCase {
     
+    lazy var listGraph: AdjacencyList<String> = {
+        let graph = AdjacencyList<String>()
+
+        let a = graph.createVertex(data: "A")
+        let b = graph.createVertex(data: "B")
+        let c = graph.createVertex(data: "C")
+        let d = graph.createVertex(data: "D")
+        let e = graph.createVertex(data: "E")
+
+
+        graph.add(.directed, from: a, to: b, weight: 0)
+        graph.add(.directed, from: a, to: d, weight: 0)
+        graph.add(.directed, from: a, to: e, weight: 0)
+        graph.add(.directed, from: a, to: c, weight: 0)
+        graph.add(.directed, from: b, to: d, weight: 0)
+        graph.add(.directed, from: b, to: c, weight: 0)
+        graph.add(.directed, from: c, to: e, weight: 0)
+        graph.add(.directed, from: d, to: e, weight: 0)
+        graph.add(.directed, from: e, to: c, weight: 0)
+        
+        return graph
+    }()
+    
+    lazy var matrixGraph: AdjacencyMatrix<String> = {
+        let graph = AdjacencyMatrix<String>()
+
+        let a = graph.createVertex(data: "A")
+        let b = graph.createVertex(data: "B")
+        let c = graph.createVertex(data: "C")
+        let d = graph.createVertex(data: "D")
+        let e = graph.createVertex(data: "E")
+
+        graph.add(.directed, from: a, to: b, weight: 0)
+        graph.add(.directed, from: a, to: d, weight: 0)
+        graph.add(.directed, from: a, to: e, weight: 0)
+        graph.add(.directed, from: a, to: c, weight: 0)
+        graph.add(.directed, from: b, to: d, weight: 0)
+        graph.add(.directed, from: b, to: c, weight: 0)
+        graph.add(.directed, from: c, to: e, weight: 0)
+        graph.add(.directed, from: d, to: e, weight: 0)
+        graph.add(.directed, from: e, to: c, weight: 0)
+        
+        return graph
+    }()
+    
     override class func tearDown() {
         super.tearDown()
     }
@@ -68,15 +113,63 @@ class GraphTests: XCTestCase {
     }
     
     func testTotalEdgesBetween2NodesShouldCount5Edges() {
-        
+        guard let aList = listGraph.vertex(for: "A"),
+            let aMatrix = matrixGraph.vertex(for: "A"),
+            let eList = listGraph.vertex(for: "E"),
+            let eMatrix = matrixGraph.vertex(for: "E") else {
+            assertionFailure("Invalid nodes")
+            return
+        }
+
+        let listEdges = listGraph.edges(from: aList, to: eList)
+        let matrixEdges = matrixGraph.edges(from: aMatrix, to: eMatrix)
+        XCTAssertEqual(listEdges.count, 5, "List graph is invalid")
+        XCTAssertEqual(matrixEdges.count, 5, "Matrix graph is invalid")
     }
-        
-    func testShouldCount0EdgesForTotalEdgesBetween2Nodes() {
-        
+
+    func testTotalEdgesBetween2NodesShouldCount0Edges() {
+        guard let aList = listGraph.vertex(for: "A"),
+            let aMatrix = matrixGraph.vertex(for: "A"),
+            let bList = listGraph.vertex(for: "B"),
+            let bMatrix = matrixGraph.vertex(for: "B") else {
+            assertionFailure("Invalid nodes")
+            return
+        }
+
+        let listEdges = listGraph.edges(from: bList, to: aList)
+        let matrixEdges = matrixGraph.edges(from: bMatrix, to: aMatrix)
+        XCTAssertEqual(listEdges.count, 0, "List graph is invalid")
+        XCTAssertEqual(matrixEdges.count, 0, "Matrix graph is invalid")
+    }
+
+    func testShouldCount1EdgesForTotalEdgesBetween2Nodes() {
+        guard let aList = listGraph.vertex(for: "A"),
+            let aMatrix = matrixGraph.vertex(for: "A"),
+            let bList = listGraph.vertex(for: "B"),
+            let bMatrix = matrixGraph.vertex(for: "B") else {
+            assertionFailure("Invalid nodes")
+            return
+        }
+
+        let listEdges = listGraph.edges(from: aList, to: bList)
+        let matrixEdges = matrixGraph.edges(from: aMatrix, to: bMatrix)
+        XCTAssertEqual(listEdges.count, 1, "List graph is invalid")
+        XCTAssertEqual(matrixEdges.count, 1, "Matrix graph is invalid")
     }
     
     func testTotalEdgesBetween2NodesShouldCount3Edges() {
-        
+        guard let aList = listGraph.vertex(for: "A"),
+            let aMatrix = matrixGraph.vertex(for: "A"),
+            let cList = listGraph.vertex(for: "C"),
+            let cMatrix = matrixGraph.vertex(for: "C") else {
+            assertionFailure("Invalid nodes")
+            return
+        }
+
+        let listEdges = listGraph.edges(from: aList, to: cList)
+        let matrixEdges = matrixGraph.edges(from: aMatrix, to: cMatrix)
+        XCTAssertEqual(listEdges.count, 4, "List graph is invalid")
+        XCTAssertEqual(matrixEdges.count, 4, "Matrix graph is invalid")
     }
     
 }

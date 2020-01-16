@@ -6,6 +6,20 @@ public struct Edge<T> {
     public let wieght: Double?
 }
 
+extension Edge: CustomStringConvertible {
+    
+    public var description: String {
+        let defaultDescription = "source: \(source.data), destination: \(destination.data)"
+        
+        if let wieght = wieght {
+            return defaultDescription + ", weight: \(wieght)"
+        } else {
+            return defaultDescription + ", weight: nil"
+        }
+    }
+    
+}
+
 extension Edge: Hashable where T: Hashable {
     
 }

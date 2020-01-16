@@ -2,7 +2,7 @@ import Foundation
 
 public class AdjacencyMatrix<T: Hashable> {
     
-    private var vertices: [Vertex<T>] = []
+    private(set) public var vertices: [Vertex<T>] = []
     private var weights: [[Double?]] = []
     
     public init() {
@@ -24,6 +24,10 @@ extension AdjacencyMatrix: Graph {
         weights.append(row)
         
         return vertex
+    }
+    
+    public func vertex(for data: T) -> Vertex<Element>? {
+        return vertices.first { $0.data == data }
     }
     
     public func addDirectedEdge(from source: Vertex<T>, to destination: Vertex<T>, weight: Double?) {

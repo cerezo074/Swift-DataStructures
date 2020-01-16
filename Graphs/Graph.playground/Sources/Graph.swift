@@ -6,14 +6,13 @@ public enum EdgeType {
 }
 
 public protocol Graph {
-    
     associatedtype Element: Hashable
     
+    func vertex(for data: Element) -> Vertex<Element>?
     func createVertex(data: Element) -> Vertex<Element>
     func addDirectedEdge(from source: Vertex<Element>, to destination: Vertex<Element>, weight: Double?)
     func edges(from source: Vertex<Element>) -> [Edge<Element>]
     func weight(from source: Vertex<Element>, to destination: Vertex<Element>) -> Double?
-    
 }
 
 extension Graph {
@@ -32,22 +31,20 @@ extension Graph {
         }
     }
     
-    public func edges(from source: Vertex<Element>, to destination: Vertex<Element>) -> Int {
-        var visitedVertexes: Set<Vertex<Element>> = [source]
+    public func edges(from source: Vertex<Element>, to destination: Vertex<Element>) -> [Edge<Element>] {
+        var visitedPaths: Set<Edge<Element>> = []
         var pendingVertexes = QueueStack<Vertex<Element>>()
         pendingVertexes.enqueue(source)
-        var totalEdges: Int = 0
-        
+        var totalEdges: [Edge<Element>] = []
         while !pendingVertexes.isEmpty {
             guard let pendingVertex = pendingVertexes.dequeue() else { continue }
-            
             let edges = self.edges(from: pendingVertex)
             edges.forEach {
                 if $0.destination == destination {
-                    totalEdges += 1
-                } else if !visitedVertexes.contains($0.destination) {
+                    totalEdges.append($0)
+                } else if !visitedPaths.contains($0) {
                     pendingVertexes.enqueue($0.destination)
-                    visitedVertexes.insert($0.destination)
+                    visitedPaths.insert($0)
                 }
             }
         }

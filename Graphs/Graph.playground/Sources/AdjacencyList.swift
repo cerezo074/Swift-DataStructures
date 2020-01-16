@@ -1,10 +1,17 @@
 import Foundation
 
-public class AdjacencyList<T: Hashable>: Graph {
+public class AdjacencyList<T: Hashable> {
     
     private var adjacencies: [Vertex<T>: [Edge<T>]] = [:]
     
     public init() {}
+}
+
+extension AdjacencyList: Graph {
+    
+    public func vertex(for data: T) -> Vertex<T>? {
+        return adjacencies.first(where: { $0.key.data == data })?.key
+    }
     
     public func createVertex(data: T) -> Vertex<T> {
         let vertex = Vertex(index: adjacencies.count, data: data)
@@ -27,6 +34,7 @@ public class AdjacencyList<T: Hashable>: Graph {
             .first { $0.destination == destination }?
             .wieght
     }
+    
 }
 
 extension AdjacencyList: CustomStringConvertible {
