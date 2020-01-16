@@ -52,4 +52,11 @@ extension Graph {
         return totalEdges
     }
     
+    public func mutualVertex(between nodeA: Vertex<Element>, and nodeB: Vertex<Element>) -> Set<Vertex<Element>> {
+        let aEdges: Set<Vertex<Element>> = Set(edges(from: nodeA).map { $0.destination })
+        let bEdges: Set<Vertex<Element>> = Set(edges(from: nodeB).map { $0.destination })
+        
+        return aEdges.intersection(bEdges)
+    }
+    
 }

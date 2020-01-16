@@ -104,6 +104,31 @@ class GraphTests: XCTestCase {
         return graph
     }()
     
+    lazy var friendsGraph: AdjacencyList<String> = {
+        let graph = AdjacencyList<String>()
+        
+        let vincent = graph.createVertex(data: "Vincent")
+        let chesley = graph.createVertex(data: "Chesley")
+        let ruiz = graph.createVertex(data: "Ruiz")
+        let patrick = graph.createVertex(data: "Patrick")
+        let ray = graph.createVertex(data: "Ray")
+        let sun = graph.createVertex(data: "Sun")
+        let cole = graph.createVertex(data: "Cole")
+        let kerry = graph.createVertex(data: "Kerry")
+        
+        graph.add(.undirected, from: vincent, to: chesley, weight: 0)
+        graph.add(.undirected, from: vincent, to: ruiz, weight: 0)
+        graph.add(.undirected, from: vincent, to: patrick, weight: 0)
+        graph.add(.undirected, from: ruiz, to: ray, weight: 0)
+        graph.add(.undirected, from: ruiz, to: sun, weight: 0)
+        graph.add(.undirected, from: patrick, to: cole, weight: 0)
+        graph.add(.undirected, from: patrick, to: kerry, weight: 0)
+        graph.add(.undirected, from: cole, to: ruiz, weight: 0)
+        graph.add(.undirected, from: cole, to: vincent, weight: 0)
+        
+        return graph
+    }()
+    
     override class func tearDown() {
         super.tearDown()
     }
@@ -170,6 +195,19 @@ class GraphTests: XCTestCase {
         let matrixEdges = matrixGraph.edges(from: aMatrix, to: cMatrix)
         XCTAssertEqual(listEdges.count, 4, "List graph is invalid")
         XCTAssertEqual(matrixEdges.count, 4, "Matrix graph is invalid")
+    }
+
+    func testCommomVertexShouldContaints1() {
+        print(friendsGraph)
+        let vincent: Vertex<String> = Vertex(index: 0, data: "Vincent")
+        let ruiz: Vertex<String> = Vertex(index: 2, data: "Ruiz")
+        let cole: Vertex<String> = Vertex(index: 6, data: "Cole")
+
+        let mutualFriends = friendsGraph.mutualVertex(between: vincent, and: ruiz)
+        var expectedResult: Set<Vertex<String>> = Set()
+        expectedResult.insert(cole)
+        
+        XCTAssertEqual(mutualFriends, expectedResult)
     }
     
 }
