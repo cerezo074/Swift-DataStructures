@@ -1,64 +1,54 @@
-// Copyright (c) 2018 Razeware LLC
-// For full license & permission details, see LICENSE.markdown.
+import UIKit
 
-//: ![sampleGraph](sampleGraph.png)
+//let graph = AdjacencyList<String>()
+//let a = graph.createVertex(data: "A")
+//let b = graph.createVertex(data: "B")
+//let c = graph.createVertex(data: "C")
+//let d = graph.createVertex(data: "D")
+//let e = graph.createVertex(data: "E")
+//let f = graph.createVertex(data: "F")
+//let g = graph.createVertex(data: "G")
+//let h = graph.createVertex(data: "H")
+//
+//graph.add(.undirected, from: a, to: b, weight: nil)
+//graph.add(.undirected, from: a, to: c, weight: nil)
+//graph.add(.undirected, from: a, to: d, weight: nil)
+//graph.add(.undirected, from: b, to: e, weight: nil)
+//graph.add(.undirected, from: c, to: g, weight: nil)
+//graph.add(.undirected, from: e, to: f, weight: nil)
+//graph.add(.undirected, from: e, to: h, weight: nil)
+//graph.add(.undirected, from: f, to: g, weight: nil)
+//graph.add(.undirected, from: f, to: c, weight: nil)
+//
+//print(graph.depthFirstSearch(from: a))
+//print(graph.depthFirstSearchRecursive(from: a))
+
+//let cycledGraph = AdjacencyList<String>()
+//let a = cycledGraph.createVertex(data: "A")
+//let b = cycledGraph.createVertex(data: "B")
+//let c = cycledGraph.createVertex(data: "C")
+//let d = cycledGraph.createVertex(data: "D")
+////
+//cycledGraph.add(.directed, from: a, to: b, weight: nil)
+//cycledGraph.add(.directed, from: b, to: c, weight: nil)
+//cycledGraph.add(.directed, from: c, to: a, weight: nil)
+//cycledGraph.add(.directed, from: c, to: d, weight: nil)
+////
+//print(cycledGraph.depthFirstSearch(from: a))
+//print(cycledGraph.depthFirstSearchRecursive(from: a))
+//print(cycledGraph.containsCycle(from: a))
 
 let graph = AdjacencyList<String>()
 let a = graph.createVertex(data: "A")
 let b = graph.createVertex(data: "B")
 let c = graph.createVertex(data: "C")
 let d = graph.createVertex(data: "D")
-let e = graph.createVertex(data: "E")
-let f = graph.createVertex(data: "F")
-let g = graph.createVertex(data: "G")
-let h = graph.createVertex(data: "H")
 
-graph.add(.undirected, from: a, to: b, weight: nil)
-graph.add(.undirected, from: a, to: c, weight: nil)
-graph.add(.undirected, from: a, to: d, weight: nil)
-graph.add(.undirected, from: b, to: e, weight: nil)
-graph.add(.undirected, from: c, to: g, weight: nil)
-graph.add(.undirected, from: e, to: f, weight: nil)
-graph.add(.undirected, from: e, to: h, weight: nil)
-graph.add(.undirected, from: f, to: g, weight: nil)
-graph.add(.undirected, from: f, to: c, weight: nil)
+graph.add(.directed, from: a, to: b, weight: nil)
+graph.add(.directed, from: a, to: c, weight: nil)
+graph.add(.directed, from: c, to: a, weight: nil)
+graph.add(.directed, from: b, to: c, weight: nil)
+graph.add(.directed, from: c, to: d, weight: nil)
 
-extension Graph where Element: Hashable {
-  
-  func depthFirstSearch(from source: Vertex<Element>) -> [Vertex<Element>] {
-    var stack: Stack<Vertex<Element>> = []
-    var pushed: Set<Vertex<Element>> = []
-    var visited: [Vertex<Element>] = []
-    
-    stack.push(source)
-    pushed.insert(source)
-    visited.append(source)
-
-    outer: while let vertex = stack.peek() {
-        let neighbors = edges(from: vertex)
-        guard !neighbors.isEmpty else {
-            stack.pop()
-            continue
-        }
-        
-        for neighbor in neighbors {
-            let nodeToVisit = neighbor.destination
-            if !pushed.contains(nodeToVisit) {
-                pushed.insert(nodeToVisit)
-                stack.push(nodeToVisit)
-                visited.append(nodeToVisit)
-                continue outer
-            }
-        }
-        
-        stack.pop()
-    }
-    
-    return visited
-  }
-}
-
-let vertices = graph.depthFirstSearch(from: a)
-vertices.forEach { vertex in
-  print(vertex)
-}
+print(graph)
+print(graph.containsCycle(from: a))
