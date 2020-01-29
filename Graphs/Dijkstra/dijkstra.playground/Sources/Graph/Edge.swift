@@ -10,3 +10,11 @@ public struct Edge<T> {
 
 extension Edge: Hashable where T: Hashable {}
 extension Edge: Equatable where T: Equatable {}
+
+extension Edge: CustomStringConvertible {
+    
+    public var description: String {
+        return "\(source) --\(weight ?? 0)--> \(destination)"
+    }
+    
+}
