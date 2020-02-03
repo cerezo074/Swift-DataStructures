@@ -3,7 +3,12 @@
 
 public class Prim<T: Hashable> {
     public typealias Graph = AdjacencyList<T>
-    public init() {}
+    public typealias Sort = (_ left: Edge<T>, _ right: Edge<T>) -> Bool
+    private let sorting: Sort
+    
+    public init(sorting: @escaping Sort) {
+        self.sorting = sorting
+    }
 }
 
 internal extension Prim {
@@ -24,17 +29,15 @@ internal extension Prim {
 
 public extension Prim {
     
-    func produceMinimunSpanningTree(for graph: Graph) -> (cost: Double, mst: Graph) {
+    func produceMinimunSpanningTree(for graph: Graph, from start: Vertex<T>? = nil) -> (cost: Double, mst: Graph) {
         var cost = 0.0
         let mst = Graph()
         var visited: Set<Vertex<T>> = []
-        var priorityQueue: PriorityQueue<Edge<T>> = PriorityQueue(sort: {
-            $0.weight ?? 0.0 < $1.weight ?? 0.0
-        })
+        var priorityQueue: PriorityQueue<Edge<T>> = PriorityQueue(sort: sorting)
         
         mst.copyVertices(from: graph)
         
-        guard let start = graph.vertices.first else {
+        guard let start = start ?? graph.vertices.first else {
             return (cost, mst)
         }
         
