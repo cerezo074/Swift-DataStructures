@@ -34,4 +34,7 @@ func transform(collection: [String]) -> Set<String> {
 
 let pattern = "abca"
 let words = "cat dog rabbit cat"
-print(match(in: words, pattern))
+print("Is pattern(\(pattern)) match with words(\(words)): \(match(in: words, pattern))")
+let pattern2 = "aca"
+let words = "cat dog rabbit cat"
+print("Is pattern(\(pattern2)) match with words(\(words)): \(match(in: words, pattern2))")
