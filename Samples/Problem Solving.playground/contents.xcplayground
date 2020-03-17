@@ -5,6 +5,9 @@
         <page name='Cells after k Days'/>
         <page name='Longest Palindromic'/>
         <page name='HackerRank STDIN STDOUT'/>
-        <page name='String Simple Pattern'/>
+        <page name='String - Match Simple Pattern'/>
+        <page name='Greedy Algorithms'/>
+        <page name='Knapsack'/>
+        <page name='String - Split Function'/>
     </pages>
 </playground>
