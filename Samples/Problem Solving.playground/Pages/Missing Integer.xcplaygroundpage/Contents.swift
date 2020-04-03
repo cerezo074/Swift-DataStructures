@@ -25,6 +25,8 @@ public func solution(_ A : inout [Int]) -> Int {
     var maxNumber = uniqueIntegers.max() ?? 1
     if maxNumber < 0 {
         maxNumber = 1
+    } else if maxNumber == 0 {
+        return 1
     }
     
     for number in 1...maxNumber {
@@ -36,5 +38,5 @@ public func solution(_ A : inout [Int]) -> Int {
     return maxNumber + 1
 }
 
-var array: [Int] = [-1, -3]
+var array: [Int] = [0]
 print(solution(&array) == 1)
